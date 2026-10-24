@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>หน้าพิมพ์ใบยืนยัน / คูปอง</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@500;700&family=Sarabun:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+body{font-family:Sarabun,Prompt,Tahoma,Arial,sans-serif;background:#fbf6ec;color:#1f2937;margin:0;padding:40px 16px;text-align:center}
+.box{max-width:420px;margin:0 auto;background:#fff;border:1px solid #eadfcb;border-radius:14px;padding:24px;text-align:left}
+h2{color:#0b5844;margin:0 0 6px;font-family:Prompt,Sarabun,sans-serif}
+h2.err{color:#7a1f1f}
+p{font-size:14px;color:#4b5563;margin:0 0 14px}
+input{width:100%;box-sizing:border-box;padding:11px;border:1px solid #eadfcb;border-radius:10px;font-size:15px;margin-bottom:10px;font-family:inherit}
+button{width:100%;background:#0b5844;color:#fff;border:0;border-radius:24px;padding:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit}
+.msg{color:#7a1f1f;font-size:14px;margin:0 0 10px}
+</style>
+</head>
+<body>
+<div class="box" id="box"><h2>กำลังโหลด...</h2><p>กำลังเตรียมหน้าพิมพ์ กรุณารอสักครู่</p></div>
+<script>
+const GAS="https://script.google.com/macros/s/AKfycbyq9rEwvEwAFzspeVSQTbftrmL7pAtyvAtYey1YvtzlQ6jXfQaSypr6qhbnXXAwoK2u3Q/exec";
+const Q=new URLSearchParams(location.search);
+const box=document.getElementById('box');
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function showErr(title,hint){box.innerHTML='<h2 class="err">'+esc(title)+'</h2><p>'+esc(hint||'กรุณาเปิดลิงก์จากอีเมลยืนยันอีกครั้ง หรือติดต่อผู้จัดงาน')+'</p>';}
+function showEmail(rid,msg,bad){
+  box.innerHTML='<h2>ยืนยันตัวตนก่อนพิมพ์</h2><p>'+esc(msg||'ลิงก์นี้ใช้ไม่ได้แล้ว กรุณากรอกอีเมลที่ใช้ลงทะเบียน')+' REG ID <b>'+esc(rid)+'</b></p>'+
+    (bad?'<div class="msg">'+esc(bad)+'</div>':'')+
+    '<form id="emf"><input type="email" id="em" required placeholder="อีเมลที่ใช้ลงทะเบียน" autocomplete="email"><button type="submit">เปิดหน้าพิมพ์</button></form>';
+  document.getElementById('emf').onsubmit=function(ev){ev.preventDefault();run(document.getElementById('em').value.trim());};
+}
+async function post(fn,body){
+  const r=await fetch(GAS+'?fn='+fn,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify(body)});
+  const t=await r.text();
+  try{return JSON.parse(t);}catch(_){throw new Error('เซิร์ฟเวอร์ตอบกลับผิดรูปแบบ');}
+}
+function render(html){
+  document.open();document.write(html);document.close();
+  if(Q.get('autoprint')==='1') setTimeout(function(){window.print();},800);
+}
+async function run(em){
+  const batch=Q.get('mode')==='batch', rid=(Q.get('rid')||'').trim();
+  if(!batch&&!rid){showErr('ลิงก์ไม่ถูกต้อง');return;}
+  box.innerHTML='<h2>กำลังโหลด...</h2><p>กำลังเตรียมหน้าพิมพ์ กรุณารอสักครู่</p>';
+  try{
+    const res=batch
+      ? await post('getBatchHtml',{day:Q.get('day')||'',cid:Q.get('cid')||'',paid:Q.get('paid')||'',exp:Q.get('exp')||'',k:Q.get('k')||''})
+      : await post('getPrintHtml',{rid:rid,k:Q.get('k')||'',em:em||''});
+    if(res&&res.success&&res.html){render(res.html);return;}
+    if(!batch&&res&&(res.needEmail||em)){showEmail(rid,res.needEmail?res.message:'',res.needEmail?'':res.message);return;}
+    showErr((res&&res.message)||'ลิงก์ไม่ถูกต้อง', batch?'กรุณาสร้างลิงก์ใหม่จากหน้าเจ้าหน้าที่':'');
+  }catch(e){
+    showErr('เชื่อมต่อไม่ได้','กรุณาตรวจสอบอินเทอร์เน็ตแล้วลองใหม่');
+  }
+}
+run('');
+</script>
+</body>
+</html>
