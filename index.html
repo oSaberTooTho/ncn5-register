@@ -3209,18 +3209,18 @@ var qrcode = function() {
 const GAS="https://script.google.com/macros/s/AKfycbyq9rEwvEwAFzspeVSQTbftrmL7pAtyvAtYey1YvtzlQ6jXfQaSypr6qhbnXXAwoK2u3Q/exec"; // doGet ใส่ URL ของ deployment ให้อัตโนมัติ (build.py --gas = เว็บโฮสต์แยก) — ห้ามแก้
 const COMPS=[
   {id:'c00', nm:'ลงทะเบียนประชุมวิชาการ Online', team:1,f1:700, f2:0,   meal:'none',day:'27–28 พ.ค. 2570',time:'',venue:'ออนไลน์ผ่าน Zoom Application'},
-  {id:'c00s',nm:'ลงทะเบียนประชุมวิชาการ Onsite',team:1,f1:1200,f2:0,   meal:'both',day:'27–28 พ.ค. 2570',time:'',venue:'อาคารสิริวรปัญญา ม.ราชภัฏนครปฐม จ.นครปฐม'},
-  {id:'c02', nm:'Skill Contest: SIM MAN',         team:4,f1:1200,f2:2000,meal:'d18', day:'28 พ.ค. 2570',time:'08.30–15.30 น.',venue:'คณะพยาบาลศาสตร์ ม.ราชภัฏนครปฐม จ.นครปฐม'},
-  {id:'c03', nm:'Simulation: SIM MOM',            team:4,f1:1200,f2:2000,meal:'d18', day:'28 พ.ค. 2570',time:'08.30–12.00 น.',venue:'คณะพยาบาลศาสตร์ ม.ราชภัฏนครปฐม จ.นครปฐม'},
-  {id:'c04', nm:'Simulation: SIM PED',            team:4,f1:1200,f2:2000,meal:'d18', day:'28 พ.ค. 2570',time:'08.30–12.00 น.',venue:'คณะพยาบาลศาสตร์ ม.ราชภัฏนครปฐม จ.นครปฐม'},
-  {id:'c05', nm:'แนวปฏิบัติที่ดี (สถาบันการศึกษา)',team:2,f1:1200,f2:2000,meal:'d17',day:'27 พ.ค. 2570',time:'13.00–15.00 น.',venue:'อาคารสิริวรปัญญา ม.ราชภัฏนครปฐม จ.นครปฐม (Hybrid)'},
-  {id:'c06', nm:'แนวปฏิบัติที่ดี (สถานบริการ)',    team:2,f1:1200,f2:2000,meal:'d17',day:'27 พ.ค. 2570',time:'13.00–15.00 น.',venue:'อาคารสิริวรปัญญา ม.ราชภัฏนครปฐม จ.นครปฐม (Hybrid)'},
-  {id:'c07a',nm:'บทความวิจัย (บุคลากรสาธารณสุข)', team:2,f1:1200,f2:2000,meal:'d17',day:'27 พ.ค. 2570',time:'13.00–17.00 น.',venue:'อาคารสิริวรปัญญา ม.ราชภัฏนครปฐม จ.นครปฐม'},
-  {id:'c07b',nm:'บทความวิจัย (นักศึกษา)',          team:2,f1:1200,f2:2000,meal:'d17',day:'27 พ.ค. 2570',time:'13.00–17.00 น.',venue:'อาคารสิริวรปัญญา ม.ราชภัฏนครปฐม จ.นครปฐม'},
-{id:'c08', nm:'การแข่งขันตอบคำถามทางการพยาบาล (จำกัดสถาบันละไม่เกิน 2 ทีม)',   team:3,f1:1200,f2:2000,meal:'d18',day:'28 พ.ค. 2570',time:'08.30–10.30 น.',venue:'อาคารสิริวรปัญญา ม.ราชภัฏนครปฐม จ.นครปฐม'},
-{id:'c09', nm:'การแข่งขันตอบคำถามกายวิภาคศาสตร์ (จำกัดสถาบันละไม่เกิน 2 ทีม)', team:3,f1:1200,f2:2000,meal:'d18',day:'28 พ.ค. 2570',time:'08.30–10.30 น.',venue:'อาคารสิริวรปัญญา ม.ราชภัฏนครปฐม จ.นครปฐม'},
-{id:'c10', nm:'นวัตกรรม (ห้องนักศึกษา)',         team:2,f1:1200,f2:2000,meal:'d18',day:'28 พ.ค. 2570',time:'08.30–10.30 น.',venue:'อาคารสิริวรปัญญา ม.ราชภัฏนครปฐม จ.นครปฐม'},
-{id:'c11', nm:'นวัตกรรม (ห้องอาจารย์/บุคลากร)', team:2,f1:1200,f2:2000,meal:'d18',day:'28 พ.ค. 2570',time:'08.30–10.30 น.',venue:'อาคารสิริวรปัญญา ม.ราชภัฏนครปฐม จ.นครปฐม'},
+  {id:'c00s',nm:'ลงทะเบียนประชุมวิชาการ Onsite',team:1,f1:1200,f2:0,   meal:'both',day:'27–28 พ.ค. 2570',time:'',venue:'อาคารสิริวรปัญญา|ม.ราชภัฏนครปฐม'},
+  {id:'c02', nm:'Skill Contest: SIM MAN',         team:4,f1:1200,f2:2000,meal:'d18', day:'28 พ.ค. 2570',time:'08.30–15.30 น.',venue:'คณะพยาบาลศาสตร์|ม.ราชภัฏนครปฐม'},
+  {id:'c03', nm:'Simulation: SIM MOM',            team:4,f1:1200,f2:2000,meal:'d18', day:'28 พ.ค. 2570',time:'08.30–12.00 น.',venue:'คณะพยาบาลศาสตร์|ม.ราชภัฏนครปฐม'},
+  {id:'c04', nm:'Simulation: SIM PED',            team:4,f1:1200,f2:2000,meal:'d18', day:'28 พ.ค. 2570',time:'08.30–12.00 น.',venue:'คณะพยาบาลศาสตร์|ม.ราชภัฏนครปฐม'},
+  {id:'c05', nm:'แนวปฏิบัติที่ดี (สถาบันการศึกษา)',team:2,f1:1200,f2:2000,meal:'d17',day:'27 พ.ค. 2570',time:'13.00–15.00 น.',venue:'อาคารสิริวรปัญญา|ม.ราชภัฏนครปฐม (Hybrid)'},
+  {id:'c06', nm:'แนวปฏิบัติที่ดี (สถานบริการ)',    team:2,f1:1200,f2:2000,meal:'d17',day:'27 พ.ค. 2570',time:'13.00–15.00 น.',venue:'อาคารสิริวรปัญญา|ม.ราชภัฏนครปฐม (Hybrid)'},
+  {id:'c07a',nm:'บทความวิจัย (บุคลากรสาธารณสุข)', team:2,f1:1200,f2:2000,meal:'d17',day:'27 พ.ค. 2570',time:'13.00–17.00 น.',venue:'อาคารสิริวรปัญญา|ม.ราชภัฏนครปฐม'},
+  {id:'c07b',nm:'บทความวิจัย (นักศึกษา)',          team:2,f1:1200,f2:2000,meal:'d17',day:'27 พ.ค. 2570',time:'13.00–17.00 น.',venue:'อาคารสิริวรปัญญา|ม.ราชภัฏนครปฐม'},
+{id:'c08', nm:'การแข่งขันตอบคำถามทางการพยาบาล (จำกัดสถาบันละไม่เกิน 2 ทีม)',   team:3,f1:1200,f2:2000,meal:'d18',day:'28 พ.ค. 2570',time:'08.30–10.30 น.',venue:'อาคารสิริวรปัญญา|ม.ราชภัฏนครปฐม'},
+{id:'c09', nm:'การแข่งขันตอบคำถามกายวิภาคศาสตร์ (จำกัดสถาบันละไม่เกิน 2 ทีม)', team:3,f1:1200,f2:2000,meal:'d18',day:'28 พ.ค. 2570',time:'08.30–10.30 น.',venue:'อาคารสิริวรปัญญา|ม.ราชภัฏนครปฐม'},
+{id:'c10', nm:'นวัตกรรม (ห้องนักศึกษา)',         team:2,f1:1200,f2:2000,meal:'d18',day:'28 พ.ค. 2570',time:'08.30–10.30 น.',venue:'อาคารสิริวรปัญญา|ม.ราชภัฏนครปฐม'},
+{id:'c11', nm:'นวัตกรรม (ห้องอาจารย์/บุคลากร)', team:2,f1:1200,f2:2000,meal:'d18',day:'28 พ.ค. 2570',time:'08.30–10.30 น.',venue:'อาคารสิริวรปัญญา|ม.ราชภัฏนครปฐม'},
 ];
 let state={type:'other',sel:[],days:{},members:{},teamName:{}};
 let staffName='';  // เก็บชื่อ staff ที่ login
@@ -3444,9 +3444,9 @@ function compCard(c){
         <div style="flex:1;min-width:0">
           <div class="cc-nm">${c.nm}</div>
           <div class="cc-spec">
-            <div class="cc-row"><span class="cc-lbl">${SVG_PERSON_I}ผู้เข้าร่วม</span><span class="cc-val">${people(c.team)} ${c.team>1?`ทีมละไม่เกิน ${c.team} คน`:'1 คน'}</span></div>
+            <div class="cc-row"><span class="cc-lbl">${SVG_PERSON_I}ผู้เข้าร่วม</span><span class="cc-val cc-dt"><b>${people(c.team)}</b><span class="cc-tm">${c.team>1?`ทีมละไม่เกิน ${c.team} คน`:'1 คน'}</span></span></div>
             <div class="cc-row"><span class="cc-lbl">${SVG_CAL}วันที่ · เวลา</span><span class="cc-val cc-dt"><b>${c.day}</b>${tm?`<span class="cc-tm">${tm}</span>`:''}</span></div>
-            <div class="cc-row"><span class="cc-lbl">${SVG_PIN}สถานที่</span><span class="cc-val">${c.venue}</span></div>
+            <div class="cc-row"><span class="cc-lbl">${SVG_PIN}สถานที่</span><span class="cc-val cc-dt"><b>${c.venue.split('|')[0]}</b>${c.venue.indexOf('|')>0?`<span class="cc-tm">${c.venue.split('|')[1]}</span>`:''}</span></div>
           </div>
           <div class="cc-badge ${dc||'none'}">${dtxt}<span class="cc-fee">${ftxt}</span></div>
         </div>
