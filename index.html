@@ -133,6 +133,7 @@ img{max-width:100%}
 .cc-main{cursor:pointer;outline:none}.cc-main:focus-visible{box-shadow:inset 0 0 0 2px var(--gold2)}
 .cg-hdr{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:14px 0 2px;padding-bottom:6px;border-bottom:1px solid var(--gold2);font-family:var(--head);font-size:15px;font-weight:700;color:var(--gold-ink)}
 .cg-hdr:first-child{margin-top:2px}
+.cg-info{margin:2px 0 6px;padding:10px 14px;border-radius:10px;background:#eef6f1;border:1px solid #cfe5d8;color:#0b5844;font-size:13px;font-weight:600;line-height:1.5}
 .cg-hdr em{font-style:normal;font-size:12.5px;font-weight:500;color:var(--ink2)}
 .pick-bar{position:sticky;bottom:0;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:12px;margin:14px -4px 0;padding:10px 14px;background:#fff;border:1.5px solid var(--green);border-radius:14px;box-shadow:0 -4px 18px rgba(0,0,0,.12)}
 .pb-txt{font-size:14px;line-height:1.5;color:var(--ink);min-width:0}.pb-meal{font-size:12.5px;color:var(--ink2)}
@@ -3413,6 +3414,7 @@ const SVG_CAL='<svg class="cc-ico" viewBox="0 0 24 24" aria-hidden="true"><path 
 const SVG_PIN='<svg class="cc-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>';
 const people=n=>'<span class="cc-ppl" aria-label="'+n+' คน">'+SVG_PERSON.repeat(Math.max(1,Math.min(n,6)))+'</span>';
 const DAY_HDR={'27':'รายการวันที่ 27 พ.ค. 2570 (วันพฤหัสบดี)','28':'รายการวันที่ 28 พ.ค. 2570 (วันศุกร์)'};
+function isCompId(id){return id!=='c00'&&id!=='c00s';}
 function compGroup(c){return c.id==='c00'||c.id==='c00s'?'reg':c.day.indexOf('27 พ.ค.')===0?'27':'28';}
 function compStart(c){const m=(c.time||'').match(/(\d+)\.(\d+)/);return m?(+m[1])*60+(+m[2]):0;}
 const SORT_NM={c05:1,c06:2,c07a:1,c07b:2,c08:1,c09:2,c10:3,c11:4,c03:5,c04:6,c02:7}; // tie-break within same start time
@@ -3466,8 +3468,13 @@ function compKey(e,id){
 function renderCompGrid(){
   const el=document.getElementById('comp-grid');
   let html='',last='';
+  const hasComp=state.sel.some(isCompId); // ค่าสมัครรายการแข่งขันรวมการเข้าร่วมประชุมแล้ว → ซ่อน Online/Onsite
   sortedComps().forEach(c=>{
     const g=compGroup(c);
+    if(g==='reg'&&hasComp){
+      if(last!=='reg'){last='reg';html+=`<div class="cg-info" role="note">ทีมแข่งขันไม่ต้องลงทะเบียนเข้าร่วมประชุมเพิ่ม — ค่าสมัครรายการรวมการเข้าร่วมแล้ว</div>`;}
+      return;
+    }
     if(g!==last){
       last=g;
       html+=g==='reg'
@@ -3495,6 +3502,13 @@ function toggleComp(id){
   const idx=state.sel.indexOf(id);
   if(idx>=0) state.sel.splice(idx,1);
   else{
+    // ค่าสมัครรายการแข่งขันรวมการเข้าร่วมประชุมแล้ว — เลือกรายการแข่งขันแล้วต้องไม่มี Online/Onsite
+    if(isCompId(id)){
+      let removed=false;
+      ['c00','c00s'].forEach(a=>{const i=state.sel.indexOf(a);if(i>=0){state.sel.splice(i,1);removed=true;}});
+      if(removed) toast('ค่าสมัครรายการแข่งขันรวมการเข้าร่วมประชุมแล้ว ไม่ต้องลงทะเบียน Onsite/Online เพิ่ม','ok');
+    }
+    if(!isCompId(id)&&state.sel.some(isCompId)){toast('ค่าสมัครรายการแข่งขันรวมการเข้าร่วมประชุมแล้ว ไม่ต้องลงทะเบียน Onsite/Online เพิ่ม','ok');return;}
     // Online (c00) และ Onsite (c00s) เลือกได้อย่างใดอย่างหนึ่ง
     if(id==='c00'||id==='c00s'){
       const other=id==='c00'?'c00s':'c00',o=state.sel.indexOf(other);
